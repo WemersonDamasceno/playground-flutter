@@ -8,5 +8,4 @@
 2. Coloque a animação .json no arquivo dos assets
 3. Só '-'
           
-          
-          https://user-images.githubusercontent.com/37156004/146837648-deb67579-6dbb-462f-989e-9dca124272e4.gif" width="400"/>
+      

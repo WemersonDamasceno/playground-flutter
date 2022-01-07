@@ -91,8 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   return Padding(
                                     padding: const EdgeInsets.only(
                                       top: 2.0,
-                                      left: 8.0,
-                                      right: 8.0,
+                                      left: 6.0,
                                     ),
                                     child: FilterChip(
                                       label: Text(_listEventos[i].titulo),

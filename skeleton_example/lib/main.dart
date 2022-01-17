@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -12,18 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return SkeletonTheme(
         themeMode: ThemeMode.dark,
-        shimmerGradient: const LinearGradient(
-          colors: [
-            Color(0xFFD8E3E7),
-            Color(0xFFC8D5DA),
-            Color(0xFFD8E3E7),
-          ],
-          stops: [
-            0.1,
-            0.5,
-            0.9,
-          ],
-        ),
         darkShimmerGradient: const LinearGradient(
           colors: [
             Color(0xFF222222),
@@ -43,43 +33,59 @@ class MyApp extends StatelessWidget {
           end: Alignment(2.4, 0.2),
           tileMode: TileMode.clamp,
         ),
-        child: MaterialApp(
+        child:  MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.purple,
           ),
-          home: const MyHomePage(title: 'Skeleton Example'),
+          home: const MyHomePage(),
         ));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+  const MyHomePage({Key? key}) : super(key: key);
+  
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> { 
+  bool isLoading = true;
+  
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+  }
+
+
+  startTime() async {
+    var _duration = const Duration(seconds: 10);
+    return Timer(_duration, removerSkeleton);
+  }
+  removerSkeleton(){
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: ListView.builder(
+      backgroundColor: Colors.black,
+        body: isLoading ? ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 5,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               padding: const EdgeInsets.all(8.0),
-              decoration: const BoxDecoration(color: Colors.white),
               child: SkeletonItem(
                   child: Column(
                 children: [
+                  //Avatar e nome
                   Row(
                     children: [
                       const SkeletonAvatar(
@@ -90,11 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(
                         child: SkeletonParagraph(
                           style: SkeletonParagraphStyle(
-                              lines: 3,
-                              spacing: 6,
+                              lines: 1,
                               lineStyle: SkeletonLineStyle(
                                 randomLength: true,
-                                height: 10,
+                                height: 20,
                                 borderRadius: BorderRadius.circular(8),
                                 minLength:
                                     MediaQuery.of(context).size.width / 6,
@@ -105,57 +110,52 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  SkeletonParagraph(
-                    style: SkeletonParagraphStyle(
-                        lines: 3,
-                        spacing: 6,
-                        lineStyle: SkeletonLineStyle(
-                          randomLength: true,
-                          height: 10,
-                          borderRadius: BorderRadius.circular(8),
-                          minLength: MediaQuery.of(context).size.width / 2,
-                        )),
-                  ),
+                  
+                  //Foto publicada
                   const SizedBox(height: 12),
                   SkeletonAvatar(
                     style: SkeletonAvatarStyle(
-                      width: double.infinity,
-                      minHeight: MediaQuery.of(context).size.height / 8,
-                      maxHeight: MediaQuery.of(context).size.height / 3,
+                      width: MediaQuery.of(context).size.width * .9,
+                      height: 350,
+                      borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: const [
-                          SkeletonAvatar(
-                              style:
-                                  SkeletonAvatarStyle(width: 20, height: 20)),
-                          SizedBox(width: 8),
-                          SkeletonAvatar(
-                              style:
-                                  SkeletonAvatarStyle(width: 20, height: 20)),
-                          SizedBox(width: 8),
-                          SkeletonAvatar(
-                              style:
-                                  SkeletonAvatarStyle(width: 20, height: 20)),
-                        ],
-                      ),
-                      SkeletonLine(
-                        style: SkeletonLineStyle(
-                            height: 16,
-                            width: 64,
-                            borderRadius: BorderRadius.circular(8)),
-                      )
-                    ],
+
+                  //Privacidade, curtidas e local
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: const [
+                            SkeletonAvatar(
+                                style:
+                                    SkeletonAvatarStyle(width: 40, height: 20)),
+                            SizedBox(width: 8),
+                            SkeletonAvatar(
+                                style:
+                                    SkeletonAvatarStyle(width: 40, height: 20)),
+                            SizedBox(width: 8),
+                            SkeletonAvatar(
+                                style:
+                                    SkeletonAvatarStyle(width: 40, height: 20)),
+                          ],
+                        ),
+                        const SkeletonLine(
+                          style: SkeletonLineStyle(
+                              height: 16,
+                              width: 64,),
+                        )
+                      ],
+                    ),
                   )
                 ],
               )),
             ),
           ),
-        ));
+        ) : 
+        const Center(child: Text("Dados carregados", style: TextStyle(color: Colors.white),),),);
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -72,6 +74,8 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
 
 enum ScreenMode { liveFeed, gallery }
 
+CameraController? _controller;
+
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
@@ -91,7 +95,6 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  CameraController? _controller;
   int _cameraIndex = 0;
 
   @override
@@ -235,19 +238,24 @@ class FaceDetectorPainter extends CustomPainter {
         paint,
       );
 
-      void paintContour(FaceContourType type) {
+      void paintContour(FaceContourType type) async {
+        //XFile? imagem;
         final faceContour = face.getContour(type);
         if (faceContour?.positionsList != null) {
           for (Offset point in faceContour!.positionsList) {
             //Se o nariz for pro canto direito
             if (type == FaceContourType.noseBottom) {
+              int qtdFoto = 0;
               //Quando virar o rosto pra direita ou pra esquerda
-              if (point.dx < 80) {
-                // ignore: avoid_print
-                print("Moveu para a direita: $point");
-              } else if (point.dx > 150) {
-                // ignore: avoid_print
-                print("Moveu para a esquerda: $point");
+              if (qtdFoto == 0) {
+                if (point.dx < 80) {
+                  qtdFoto++;
+                  print("Moveu para a direita: $point");
+                  //final imagem = await _controller?.takePicture();
+                } else if (point.dx > 150) {
+                  print("Moveu para a esquerda: $point");
+                  //imagem = await _controller?.takePicture();
+                }
               }
             }
             //Pintar os pontos

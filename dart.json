@@ -1,0 +1,299 @@
+{
+    // Place your snippets for dart here. Each snippet is defined under a snippet name and has a prefix, body and 
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+    // same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+    "Stateless Widget": {
+        "prefix": "stless",
+        "body": [
+            "import 'package:flutter/material.dart';",
+            "\n",
+            "class ${1:MyClass} extends StatelessWidget {",
+				"const ${1:MyClass} ({super.key});",
+				"@override",
+				"Widget build(BuildContext context) {",
+					"return Container($0);",
+				"}",
+			"}"
+        ]
+    },
+    "Stateful Widget": {
+        "prefix": "stful",
+        "body": [
+            "import 'package:flutter/material.dart';",
+            "\n",
+            "class ${1:MyClass} extends StatefulWidget {",
+            "const ${1:MyClass} ({super.key});",
+            "\n",
+            "@override","\n",
+            "State<${1:MyClass}> createState() => _${1:MyClass}State();",
+            "}",
+            "\n",
+            "class _${1:MyClass}State extends State<${1:MyClass}> {",
+            "\n",
+            "@override",
+            "void initState() {",
+            "super.initState();",
+            "}",
+            "\n",
+            "@override",
+            "void dispose() {",
+            "super.dispose();",
+            "}",
+            "\n",
+            "@override",
+            "Widget build(BuildContext context) {",
+            "return Container($0);}}"
+        ]
+    },
+    "Widget Test": {
+        "prefix": "wtest",
+        "body": [
+            "import 'package:flutter_test/flutter_test.dart';",
+            "import 'package:flutter/material.dart';",
+            "//import 'package:piota/${1:widgetfile}.dart';",
+            "\n",
+            "import 'ui_test_util.dart';",
+            "\n",
+            "void main() {",
+            "group('${2:groupname}', () {",
+            "final testableWidget = testWidget(${3:Container()},Size(375, 667));",
+            "testWidgets('${3:Container()} test', (WidgetTester tester) async {",
+            "final finder = find.byKey(Key('${5:keyname}'));",
+            "await tester.pumpWidget(testableWidget);",
+            "expect(finder, findsOneWidget);",
+            "});});}"
+        ]
+    },
+
+    "Unit Test Main":{
+        "prefix": "testMain",
+        "body": [
+            "import 'package:flutter_test/flutter_test.dart';",
+            "import 'package:flutter/material.dart';",
+            "\n",
+            "void main() {",
+            "group('${2:groupname}', () {",
+            "test('should ${3:description}', () {",
+            "expect(${4:Container()}, ${5:Container()});",
+            "});});}"
+        ]
+    },
+    
+    "Unit Test": {
+        "prefix": "testUnit",
+        "body": [
+            "test('should ${2:description}', () {",
+            "//arrange",
+            "\n",
+            "//act",
+            "\n",
+            "//assert",
+            "expect(${3:Container()}, ${4:Container()});",
+            "});"
+        ]
+    },
+
+	"showDialog": {
+		"prefix": "dialog",
+		"body": [
+			"showDialog(context: context, builder: (context) => AlertDialog(title: Text('${1:Title}'), content: Text('${2:Content}'), actions: [",
+			"ElevatedButton(onPressed: () => Navigator.pop(context), child: Text('${3:Cancel}')),",
+			"ElevatedButton(onPressed: () => Navigator.pop(context), child: Text('${4:Ok}'))",
+			"],),);"
+		]
+	},
+
+	"showSnackBar": {
+		"prefix": "showSnackBar",
+		"body": [
+			"ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${1:Content}'), action: SnackBarAction(label: '${2:Action}', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()),),);"
+		]
+	},
+
+	"ElevatedButton": {
+		"prefix": "elevatedButton",
+		"body": [
+		  "ElevatedButton(",
+		  "  child: const Text('${1:Button label}'),",
+		  "  onPressed: () {},",
+		  ")${0}"
+		],
+		"description": "Flutter ElevatedButton snippet"
+	  },
+
+    "ContainerDecoration": {
+        "prefix": "containerDecoration",
+        "body": [ 
+            "Container(",
+                "decoration: BoxDecoration(",
+                    "color: Colors.blue,",
+                    "borderRadius: BorderRadius.circular(10),",
+                "),",
+            "),"
+        ]
+    },
+
+    "Text Widget": {
+        "prefix": "text",
+        "body": [
+            "Text('${1:Text}', style: TextStyle(fontSize: ${2:20}, color: Colors.${3:black}),)"
+        ]
+    },
+
+    "Rich Text":{
+        "prefix": "richText",
+        "body": [
+            "RichText(",
+                "text: TextSpan(",
+                    "text: '${1:Text}',",
+                    "style: TextStyle(fontSize: ${2:20}, color: Colors.${3:black}),",
+                    "children: [",
+                        "TextSpan(",
+                            "text: '${4:Text}',",
+                            "style: TextStyle(fontSize: ${5:20}, color: Colors.${6:black}),",
+                        "),",
+                    "],",
+                "),",
+            "),"
+        ]
+    },
+
+    "TextFormField": {
+        "prefix": "textFormField",
+        "body": [
+            "TextFormField(",
+                "decoration: InputDecoration(",
+                    "border: OutlineInputBorder(),",
+                    "labelText: '${1:Label}',",
+                "),",
+            "),"
+        ]
+    },
+
+    "Scaffold": {
+        "prefix": "scaffold",
+        "body": [
+            "Scaffold(",
+                "appBar: AppBar(",
+                    "title: Text('${1:Title}'),",
+                "),",
+                "body: ${2:Container()},",
+            "),"
+        ]
+    },
+
+    "ListView.builder": {
+        "prefix": "listViewBuilder",
+        "body": [
+            "ListView.builder(",
+                "itemCount: ${1:10},",
+                "itemBuilder: (context, index) {",
+                    "return ${2:Container()};",
+                "},",
+            "),"
+        ]
+    },
+
+    "GridView.builder": {
+        "prefix": "gridViewBuilder",
+        "body": [
+            "GridView.builder(",
+                "gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(",
+                    "crossAxisCount: ${1:2},",
+                "),",
+                "itemCount: ${2:10},",
+                "itemBuilder: (context, index) {",
+                    "return ${3:Container()};",
+                "},",
+            "),"
+        ]
+    },
+
+    "Column": {
+        "prefix": "column",
+        "body": [
+            "Column(",
+                "children: [",
+                    "${1:Container()},",
+                    "${2:Container()},",
+                "],",
+            "),"
+        ]
+    },
+
+    "Row": {
+        "prefix": "row",
+        "body": [
+            "Row(",
+                "children: [",
+                    "${1:Container()},",
+                    "${2:Container()},",
+                "],",
+            "),"
+        ]
+    },
+
+    "Stack": {
+        "prefix": "stack",
+        "body": [
+            "Stack(",
+                "children: [",
+                    "${1:Container()},",
+                    "${2:Container()},",
+                "],",
+            "),"
+        ]
+    },
+
+    "Align": {
+        "prefix": "align",
+        "body": [
+            "Align(",
+                "alignment: Alignment.${1:center},",
+                "child: ${2:Container()},",
+            "),"
+        ]
+    },
+
+    "Flexible": {
+        "prefix": "flexible",
+        "body": [
+            "Flexible(",
+                "flex: ${1:1},",
+                "child: ${2:Container()},",
+            "),"
+        ]
+    },
+
+    "AspectRatio": {
+        "prefix": "aspectRatio",
+        "body": [
+            "AspectRatio(",
+                "aspectRatio: ${1:1},",
+                "child: ${2:Container()},",
+            "),"
+        ]
+    },
+
+    "SizedBox": {
+        "prefix": "sizedBox",
+        "body": [
+            "SizedBox(",
+                "width: ${1:100},",
+                "height: ${2:100},",
+                "child: ${3:Container()},",
+            "),"
+        ]
+    },
+    
+}
